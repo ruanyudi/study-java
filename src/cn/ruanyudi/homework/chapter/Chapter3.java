@@ -1,5 +1,7 @@
 package cn.ruanyudi.homework.chapter;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -8,6 +10,7 @@ public class Chapter3 {
         System.out.println("\n欢迎查看第三章节的作业，请选择要查看的作业号:");
         while (true) {
             System.out.println("1——客户选购信息管理系统");
+            System.out.println("2——多线程判断素数");
             System.out.println("输入你的选择（0-退出）");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
@@ -17,6 +20,9 @@ public class Chapter3 {
                 case 1:
                     new CustomerGoodsAdmin().show();
                     break;
+                case 2:
+                    new InterfaceThread().show();
+                    break;
             }
 //            System.out.println("输入0以继续");
 //            sc.nextInt();
@@ -24,6 +30,42 @@ public class Chapter3 {
     }
 }
 
+class InterfaceThread{
+    @Test
+    public void show(){
+        System.out.println("请输入十个数字");
+        int[] data = new int[10];
+        Scanner sc = new Scanner(System.in);
+        for(int i=0;i<10;i++){
+            data[i] = sc.nextInt();
+//            data[i] =i;
+        }
+        for(int i=0;i<10;i++){
+            MultiThread thread = new MultiThread(data[i]);
+            thread.start();
+        }
+    }
+}
+class MultiThread extends Thread{
+    private int number;
+    MultiThread(int data){
+        this.number = data;
+    }
+    public void run(){
+        if(number == 1|| number==0){
+            System.out.println(number + "不是素数");
+            return ;
+        }
+        for(int i=2;i<=java.lang.Math.sqrt((double) number);i++){
+            if(number%i==0){
+                System.out.println(number + "不是素数");
+                return;
+            }
+        }
+        System.out.println(number + "是素数");
+        return ;
+    }
+}
 
 class CustomerGoodsAdmin{
     Scanner sc = new Scanner(System.in);
