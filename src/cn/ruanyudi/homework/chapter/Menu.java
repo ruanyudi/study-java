@@ -1,8 +1,11 @@
 package cn.ruanyudi.homework.chapter;
 
+import org.junit.Test;
+
 import java.util.Scanner;
 
 public class Menu {
+    @Test
     public static void showMenu() {
         Scanner sc = new Scanner(System.in);
         while (true) {
