@@ -10,11 +10,11 @@ import java.util.Scanner;
 
 public class Chapter4 {
     public static void showMenu() {
-        System.out.println("\n欢迎查看第四章节的作业，请选择要查看的作业号:");
+        System.out.println("\nWelcome to Section 4 assignments, select the activity number you want to view:");
         while (true) {
-            System.out.println("1——文件读写");
-            System.out.println("2——图像下载");
-            System.out.println("输入你的选择（0-退出）");
+            System.out.println("1 - File reading and writing");
+            System.out.println("2 – Image download");
+            System.out.println("Enter your choice (0-exit)");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             switch (choice) {
@@ -41,7 +41,7 @@ class TextReadWrite{
         File file1 = new File(filePath1);
         if(file1.exists()==false){
             try {
-                System.out.println("未找到文件 自动创建文件....");
+                System.out.println("File not found Automatically create files....");
                 file1.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException(e);

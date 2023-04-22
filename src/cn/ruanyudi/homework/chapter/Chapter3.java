@@ -13,11 +13,11 @@ interface employment {
 
 public class Chapter3 {
     public static void showMenu() {
-        System.out.println("\n欢迎查看第三章节的作业，请选择要查看的作业号:");
+        System.out.println("\nWelcome to view the assignments in Section 3, please select the activity number to view:");
         while (true) {
-            System.out.println("1——客户选购信息管理系统");
-            System.out.println("2——多线程判断素数");
-            System.out.println("3——多线程货物管理");
+            System.out.println("1——Customer purchase information management system");
+            System.out.println("2——Multi-threaded judgment prime");
+            System.out.println("3——Multi-threaded cargo management");
             System.out.println("4——回调Demo");
             System.out.println("5——学生信息管理系统");
             System.out.println("输入你的选择（0-退出）");
