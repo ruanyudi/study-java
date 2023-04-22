@@ -6,14 +6,14 @@ import java.util.Scanner;
 
 public class Chapter2 {
     public static void showMenu() {
-        System.out.println("\n欢迎查看第二章节的作业，请选择要查看的作业号:");
+        System.out.println("\nWelcome to view the assignments in Section 2, please select the assignment number to view:");
         while (true) {
-            System.out.println("\n1——猜拳游戏");
-            System.out.println("2——录入手机信息");
-            System.out.println("3——包装类");
-            System.out.println("4——判断三角形");
-            System.out.println("5——九九乘法表");
-            System.out.println("输入你的选择（0-退出）");
+            System.out.println("\n1.Guessing game");
+            System.out.println("2.Enter mobile phone information");
+            System.out.println("3.Packaging class");
+            System.out.println("4.Judging triangles");
+            System.out.println("5.Nine-nine multiplication table");
+            System.out.println("Enter your choice (0-exit)");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             switch (choice) {
@@ -42,8 +42,8 @@ public class Chapter2 {
 class GuessDemo {
     public static void run() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n现在开始猜拳游戏.....");
-        System.out.println("输入你的选择 : (0:剪刀 1:石头 2:布)");
+        System.out.println("\nStart guessing game now.....");
+        System.out.println("Enter your choice : (0: Scissors 1: Stone 2: Cloth)");
         int choice = sc.nextInt();
         Random rd = new Random(new Random().nextInt());
         int computer_choice = Math.abs(rd.nextInt() % 3);
@@ -53,27 +53,27 @@ class GuessDemo {
             flag = false;
         }
         if (flag == false) {
-            result = "你输了";
+            result = "You lose";
         } else {
-            result = "你赢了";
+            result = "You win";
         }
         if (computer_choice == choice) {
-            result = "平局";
+            result = "draw";
         }
         System.out.println(result);
         String str = "";
         switch (computer_choice) {
             case 0:
-                str = "剪刀";
+                str = "scissors";
                 break;
             case 1:
-                str = "石头";
+                str = "stone";
                 break;
             case 2:
-                str = "布";
+                str = "cloth";
                 break;
         }
-        System.out.println("电脑的选择是 : " + str);
+        System.out.println("The choice of computer is: " + str);
     }
 }
 
@@ -85,20 +85,20 @@ class PhoneDemo {
     double price = 0;
 
     public void run() {
-        System.out.println("开始录入手机信息...");
-        System.out.println("输入手机的品牌 : ");
+        System.out.println("Start entering your phone information...");
+        System.out.println("Enter the brand of your phone : ");
         name = sc.next();
-        System.out.println("输入手机的系统信息 : ");
+        System.out.println("Enter your phone's system information : ");
         systemInfo = sc.next();
-        System.out.println("输入手机处理器的数量 : ");
+        System.out.println("Enter the number of processors for your phone : ");
         numCpu = sc.nextInt();
-        System.out.println("输入手机的价格 : ");
+        System.out.println("Enter the price of your phone : ");
         price = sc.nextDouble();
-        System.out.println("手机信息录入完成...");
-        System.out.println("手机品牌 : " + name);
-        System.out.println("操作系统 : " + systemInfo);
-        System.out.println("CPU数 : " + numCpu);
-        System.out.println("价格 : " + price + "元");
+        System.out.println("Mobile phone information entry completed...");
+        System.out.println("Mobile Phone Brand : " + name);
+        System.out.println("Operating system: " + systemInfo);
+        System.out.println("Number of CPUs : " + numCpu);
+        System.out.println("Price: " + price + "Yuan");
     }
 }
 
@@ -106,44 +106,44 @@ class TriangleDemo {
     Scanner sc = new Scanner(System.in);
 
     public void run() {
-        System.out.println("请输入三角形的三条边的大小以判断三角形的形状 : ");
+        System.out.println("Please enter the size of the three sides of the triangle to judge the shape of the triangle: ");
         int[] data = new int[3];
         for (int i = 0; i < 3; i++) data[i] = sc.nextInt();
         Arrays.sort(data);
         if (data[2] <= data[1] + data[0]) {
-            System.out.println("不构成三角形");
+            System.out.println("Does not form a triangle");
             return;
         }
         double tmp_a = Math.pow(data[2], 2);
         double tmp_b = Math.pow(data[0], 2) + Math.pow(data[1], 2);
         String result = "";
         if (tmp_a > tmp_b) {
-            result = "钝角三角形";
+            result = "Blunt triangle";
         } else if (tmp_a == tmp_b) {
-            result = "直角三角形";
+            result = "right-angled triangle";
         } else {
-            result = "锐角三角形";
+            result = "acute triangle";
             if (data[0] == data[1] || data[1] == data[2] || data[0] == data[2]) {
-                result = "等腰三角形";
+                result = "isosceles triangle";
             }
             if (data[0] == data[1] && data[1] == data[2]) {
-                result = "等边三角形";
+                result = "equilateral triangle";
             }
         }
-        System.out.println("该三角形是" + result);
+        System.out.println("The triangle is" + result);
     }
 }
 
 class ApiDemo {
     public void run() {
-        System.out.println("Byte的数据总数 : " + (Byte.MAX_VALUE - Byte.MIN_VALUE + 1));
-        System.out.println("Byte的取值范围是" + Byte.MIN_VALUE + "-" + Byte.MAX_VALUE);
-        System.out.println("将字符串127转换为Byte类型的值为 : " + Byte.parseByte("127"));
-        System.out.println("Byte的数据总数 : " + (Integer.MAX_VALUE - Integer.MIN_VALUE + 1.0));
-        System.out.println("Byte的取值范围是" + Integer.MIN_VALUE + "-" + Integer.MAX_VALUE);
-        System.out.println("将字符串5000转换为Byte类型的值为 : " + Integer.parseInt("5000"));
-        System.out.println("16转为二进制 : " + Integer.toBinaryString(16));
-        System.out.println("16转为十六进制 : " + Integer.toHexString(16));
+        System.out.println("Total data for Byte : " + (Byte.MAX_VALUE - Byte.MIN_VALUE + 1));
+        System.out.println("The value range of Byte is" + Byte.MIN_VALUE + "-" + Byte.MAX_VALUE);
+        System.out.println("Convert the string 127 to a value of type Byte to : " + Byte.parseByte("127"));
+        System.out.println("Total data for Integer : " + (Integer.MAX_VALUE - Integer.MIN_VALUE + 1.0));
+        System.out.println("The value range of Integer is : " + Integer.MIN_VALUE + "-" + Integer.MAX_VALUE);
+        System.out.println("Convert the string 5000 to a value of type Integer: " + Integer.parseInt("5000"));
+        System.out.println("16 to binary : " + Integer.toBinaryString(16));
+        System.out.println("16 to hexadecimal : " + Integer.toHexString(16));
 
     }
 }
@@ -151,7 +151,7 @@ class ApiDemo {
 class MultiplicationDemo {
     Scanner sc = new Scanner(System.in);
     public void run() {
-        System.out.println("选择需要打印的格式 (0 : 左上三角形，1 : 左下三角，2 : 右上三角，3 : 右下三角): ");
+        System.out.println("Select the format you want to print (0 : upper left triangle, 1 : bottom left triangle, 2 : top right triangle, 3 : bottom right triangle): ");
         int choice = sc.nextInt();
         switch (choice) {
             case 0:

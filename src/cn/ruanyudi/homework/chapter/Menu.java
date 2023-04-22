@@ -1,7 +1,5 @@
 package cn.ruanyudi.homework.chapter;
 
-import org.junit.Test;
-
 import java.util.Scanner;
 
 public class Menu {
@@ -9,13 +7,13 @@ public class Menu {
     public static void showMenu() {
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("选择想要查看的章节：\n");
-            System.out.println("1. 第1章节\n");
-            System.out.println("2. 第2章节\n");
-            System.out.println("3. 第3章节\n");
-            System.out.println("4. 第4章节\n");
-            System.out.println("5. 第5章节\n");
-            System.out.print("输入你的选择（0-退出）： ");
+            System.out.println("Select the chapter you want to view:\n");
+            System.out.println("1. Section 1\n");
+            System.out.println("2. Section 2\n");
+            System.out.println("3. Section 3\n");
+            System.out.println("4. Section 4\n");
+            System.out.println("5. Section 5\n");
+            System.out.print("Enter your choice (0-exit): ");
             int choice = sc.nextInt();
             switch (choice) {
                 case 0:

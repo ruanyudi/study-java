@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Chapter5 {
     public static void showMenu() {
-        System.out.println("\n欢迎查看第五章节的作业，请选择要查看的作业号:");
+        System.out.println("nWelcome to the assignment in Chapter 5, please select the job number to view:");
         while (true) {
-            System.out.println("1——日历");
-            System.out.println("输入你的选择（0-退出）");
+            System.out.println("1 - calendar");
+            System.out.println("Enter your choice (0-exit)");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             switch (choice) {

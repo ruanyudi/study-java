@@ -15,12 +15,12 @@ public class Chapter3 {
     public static void showMenu() {
         System.out.println("\nWelcome to view the assignments in Section 3, please select the activity number to view:");
         while (true) {
-            System.out.println("1——Customer purchase information management system");
-            System.out.println("2——Multi-threaded judgment prime");
-            System.out.println("3——Multi-threaded cargo management");
-            System.out.println("4——回调Demo");
-            System.out.println("5——学生信息管理系统");
-            System.out.println("输入你的选择（0-退出）");
+            System.out.println("1.Customer purchase information management system");
+            System.out.println("2.Multi-threaded judgment prime");
+            System.out.println("3.Multi-threaded cargo management");
+            System.out.println("4.CallbackDemo");
+            System.out.println("5.Student information management system");
+            System.out.println("Enter your choice (0-exit)");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             switch (choice) {
@@ -42,7 +42,7 @@ public class Chapter3 {
 class InterfaceThread {
 
     public void show() {
-        System.out.println("请输入十个数字");
+        System.out.println("Please enter ten digits");
         int[] data = new int[10];
         Scanner sc = new Scanner(System.in);
         for (int i = 0; i < 10; i++) {
@@ -65,16 +65,16 @@ class MultiThread extends Thread {
 
     public void run() {
         if (number == 1 || number == 0) {
-            System.out.println(number + "不是素数");
+            System.out.println(number + "Not prime");
             return;
         }
         for (int i = 2; i <= java.lang.Math.sqrt(number); i++) {
             if (number % i == 0) {
-                System.out.println(number + "不是素数");
+                System.out.println(number + "Not prime");
                 return;
             }
         }
-        System.out.println(number + "是素数");
+        System.out.println(number + "is a prime number");
     }
 }
 
@@ -89,9 +89,9 @@ class CustomerGoodsAdmin {
             System.out.println("Welcome\tTo\tCustomerGoodsManagement");
             System.out.println("------------------------------------");
             System.out.println();
-            System.out.println("1.\t录入Customer信息");
-            System.out.println("2.\t查询用户信息");
-            System.out.println("3.\t查看用户Rank");
+            System.out.println("1.\tEnter the customer information");
+            System.out.println("2.\tQuery user information");
+            System.out.println("3.\tView users Rank");
             System.out.println("0.\tExit System");
             System.out.println();
             choice = sc.nextInt();
@@ -108,7 +108,7 @@ class CustomerGoodsAdmin {
     }
 
     protected void inputCustomerInfo() {
-        System.out.println("输入要录入的Customer个数:");
+        System.out.println("Enter the number of customers to enter:");
         int number = sc.nextInt();
         int preLength = customers != null ? customers.length : 0;
         if (preLength == 0) {
@@ -124,13 +124,13 @@ class CustomerGoodsAdmin {
 
     private void print() {
         if (customers == null) {
-            System.out.println("当前没有用户信息");
+            System.out.println("There is currently no user information");
             return;
         }
         System.out.println("select the CustomerName (0 for AllCustomer):");
         String choice = sc.next();
         if (choice.equals("0")) {
-            System.out.println("系统当前有" + customers.length + "条用户信息");
+            System.out.println("The system currently has" + customers.length + "user information");
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
@@ -141,12 +141,12 @@ class CustomerGoodsAdmin {
                     return;
                 }
             }
-            System.out.println("找不到该用户");
+            System.out.println("The user could not be found");
         }
     }
 
     private void rank() {
-        System.out.println("系统当前有" + customers.length + "条用户信息");
+        System.out.println("The system currently has" + customers.length + "user information");
         for (int i = 0; i < customers.length; i++) {
             for (int j = customers.length - 1; j > i; j--) {
                 if (customers[j].getTotal() > customers[j - 1].getTotal()) {
@@ -157,7 +157,7 @@ class CustomerGoodsAdmin {
             }
         }
         for (Customer customer : customers) {
-            System.out.println("Name : " + customer.getName() + "\t总计" + customer.getTotal());
+            System.out.println("Name : " + customer.getName() + "\ttotal" + customer.getTotal());
         }
     }
 }
@@ -170,11 +170,11 @@ class Customer {
     private double total;
 
     Customer() {
-        System.out.println("输入客户的姓名:");
+        System.out.println("Enter the customer's name:");
         name = sc.next();
-        System.out.println("输入用户的年龄:");
+        System.out.println("Enter the user's age:");
         age = sc.nextInt();
-        System.out.println("输入购买的商品数量:");
+        System.out.println("Enter the quantity purchased:");
         int number = sc.nextInt();
         goods = new Goods[number];
         for (int i = 0; i < goods.length; i++) {
@@ -217,11 +217,11 @@ class Goods {
     Scanner sc = new Scanner(System.in);
 
     Goods() {
-        System.out.println("输入商品的名称:");
+        System.out.println("Enter a name for the product:");
         name = sc.next();
-        System.out.println("输入商品的数量:");
+        System.out.println("Enter the quantity of the item:");
         num = sc.nextInt();
-        System.out.println("输入商品的价格:");
+        System.out.println("Enter the price of the item:");
         price = sc.nextDouble();
         totalPrice = price * num;
     }
@@ -231,7 +231,7 @@ class Goods {
     }
 
     public String toString() {
-        System.out.println("商品名称 : " + name + "\t商品数量 : " + num + "\t商品单价 : " + price + "\t商品总价 : " + totalPrice);
+        System.out.println("Product Name : " + name + "\tNumber of Products : " + num + "\tUnit Price : " + price + "\tTotal price of goods : " + totalPrice);
         return "";
     }
 }
@@ -490,54 +490,54 @@ class StudentManageSystem implements Serializable{
     }
 
     void addStudent() {
-        System.out.println("输入学生的姓名 : ");
+        System.out.println("Enter student's name : ");
         String name = sc.next();
-        System.out.println("输入学生的专业 : ");
+        System.out.println("Enter the student's major: ");
         String major = sc.next();
         StudentInfo studentInfo = new StudentInfo(name, major);
         studentsData.add(studentInfo);
     }
 
     void updateStudent() {
-        System.out.println("输入要修改的学生姓名 ： ");
+        System.out.println("Enter the name of the student you want to modify: ");
         String name = sc.next();
-        System.out.println("输入要修改的信息 ： ");
+        System.out.println("Enter the information you want to modify : ");
         String major = sc.next();
         Boolean flag = false;
         for(StudentInfo data : studentsData){
             if(Objects.equals(data.name, name)){
                 flag = true;
                 data.major = major;
-                System.out.println("修改成功");
+                System.out.println("The modification was successful");
                 listStudent();
                 return ;
             }
         }
         if(flag == false){
-            System.out.println("未找到该学生");
+            System.out.println("The student was not found");
         }
     }
 
     void deleteStudent() {
-        System.out.println("输入要删除的学生姓名 ： ");
+        System.out.println("Enter the name of the student you want to delete: ");
         String name = sc.next();
         Boolean flag = false;
         for(StudentInfo data : studentsData){
             if(Objects.equals(data.name, name)){
                 studentsData.remove(data);
                 flag = true;
-                System.out.println("删除成功");
+                System.out.println("The deletion was successful");
                 listStudent();
                 return ;
             }
         }
         if(!flag){
-            System.out.println("未找到该学生");
+            System.out.println("The student was not found");
         }
     }
 
     void infoStudent() {
-        System.out.println("输入要查看的学生姓名 ： ");
+        System.out.println("Enter the name of the student you want to view: ");
         String name = sc.next();
         boolean flag = false;
         for(StudentInfo data : studentsData){
@@ -556,14 +556,14 @@ class StudentManageSystem implements Serializable{
     public void show() {
         loadData();
         while (true) {
-            System.out.println("学生信息管理");
+            System.out.println("Student Information Management");
             System.out.println("----------------");
-            System.out.println("1——学生信息添加");
-            System.out.println("2——学生信息修改");
-            System.out.println("3——学生信息删除");
-            System.out.println("4——学生信息查询");
-            System.out.println("5——查看所有信息");
-            System.out.println("0——退出系统");
+            System.out.println("1 - Student Information Addition");
+            System.out.println("2 - Student Information Modification");
+            System.out.println("3 - Student Information Deletion");
+            System.out.println("4 - Student Information Inquiry");
+            System.out.println("5 - View all information");
+            System.out.println("0 - exit system");
             System.out.println("----------------");
             int choice = sc.nextInt();
 //            System.out.println(choice);

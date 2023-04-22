@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Chapter1 {
     public static void showMenu() {
-        System.out.println("\n欢迎查看第一章节的作业，请选择要查看的作业号:");
+        System.out.println("\nWelcome to view the assignments in the first section, please select the activity number to view:");
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("1——日历");
-            System.out.println("2——学生成绩管理系统");
-            System.out.println("输入你的选择（0-退出）");
+            System.out.println("1.Calendar");
+            System.out.println("2.Student Achievement Management System");
+            System.out.println("Enter your choice (0-exit)");
             int choice = sc.nextInt();
             switch (choice) {
                 case 0 -> {
@@ -36,12 +36,12 @@ class CalendarDemo {
     Scanner sc = new Scanner(System.in);
 
     public void run() {
-        System.out.println("输入年份：");
+        System.out.println("Enter the year:");
         int year = sc.nextInt();
-        System.out.println("输入月份：");
+        System.out.println("Enter the month:");
         int month = sc.nextInt();
         int day = 1;
-        System.out.println("一\t二\t三\t四\t五\t六\t日\n");
+        System.out.println("Mon\tTue\tWed\tThu\tFri\tSat\tSun\n");
         int week = getWeek(year, month, day);
         for (int i = 0; i < week - 1; i++) {
             System.out.print("\t");
@@ -93,13 +93,13 @@ class ManagementDemo {
 
     public void run() {
         System.out.println("---------------------");
-        System.out.println("\t学生成绩管理系统");
+        System.out.println("\tStudent Achievement Management System");
         System.out.println("---------------------");
         while (true) {
-            System.out.println("\t1.录入学生信息");
-            System.out.println("\t2.查看学生排名");
-            System.out.println("\t0.退出系统");
-            System.out.println("输入要执行的操作");
+            System.out.println("\t1.Enter student information");
+            System.out.println("\t2.View student rankings");
+            System.out.println("\t0.Exit the system");
+            System.out.println("Enter the action to take");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -115,7 +115,7 @@ class ManagementDemo {
     }
 
     void addStudent() {
-        System.out.println("请输入学生的数量：");
+        System.out.println("Please enter the number of students:");
         int n = sc.nextInt();
         students = new Students[n];
         for (int i = 0; i < n; i++) {
@@ -126,7 +126,7 @@ class ManagementDemo {
 
     void showRank() {
         int k = 0;
-        System.out.println("请问需要查看正序或倒序（0：正 1：倒）：");
+        System.out.println("Please need to check the positive or reverse order (0:positive 1:inverted):");
         k = sc.nextInt();
         if (k == 1) {
             k = -1;
@@ -134,7 +134,7 @@ class ManagementDemo {
         try {
             int tmp = students.length;
         } catch (Exception e) {
-            System.out.println("当前系统中没有学生信息");
+            System.out.println("There is no student information in the current system");
             return;
         }
 
@@ -162,7 +162,7 @@ class Students {
     Scanner sc = new Scanner(System.in);
 
     public Students() {
-        System.out.println("请依次输入学生的姓名，Java成绩，SQLserver成绩，Android成绩（以‘,’做分割）");
+        System.out.println("Please enter the student's name, Java grade, SQLserver score, and Android score (split by ',')");
         String sArgs = sc.next();
         String Args[] = sArgs.split(",");
         name = Args[0];
