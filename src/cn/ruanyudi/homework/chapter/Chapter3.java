@@ -1,10 +1,15 @@
 package cn.ruanyudi.homework.chapter;
 
-import org.junit.Test;
-
+import javax.swing.text.StyledEditorKit;
+import java.io.*;
 import java.util.*;
 
 import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
+
+interface employment {
+    void CallBack();
+}
 
 public class Chapter3 {
     public static void showMenu() {
@@ -12,22 +17,21 @@ public class Chapter3 {
         while (true) {
             System.out.println("1——客户选购信息管理系统");
             System.out.println("2——多线程判断素数");
-            System.out.print("3——多线程货物管理");
+            System.out.println("3——多线程货物管理");
+            System.out.println("4——回调Demo");
+            System.out.println("5——学生信息管理系统");
             System.out.println("输入你的选择（0-退出）");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             switch (choice) {
-                case 0:
+                case 0 -> {
                     return;
-                case 1:
-                    new CustomerGoodsAdmin().show();
-                    break;
-                case 2:
-                    new InterfaceThread().show();
-                    break;
-                case 3:
-                    new ManagedGoodsInterface().show();
-                    break;
+                }
+                case 1 -> new CustomerGoodsAdmin().show();
+                case 2 -> new InterfaceThread().show();
+                case 3 -> new ManagedGoodsInterface().show();
+                case 4 -> new EmploymentSystem().show();
+                case 5 -> new StudentManageSystem().show();
             }
 //            System.out.println("输入0以继续");
 //            sc.nextInt();
@@ -36,7 +40,7 @@ public class Chapter3 {
 }
 
 class InterfaceThread {
-    @Test
+
     public void show() {
         System.out.println("请输入十个数字");
         int[] data = new int[10];
@@ -92,17 +96,12 @@ class CustomerGoodsAdmin {
             System.out.println();
             choice = sc.nextInt();
             switch (choice) {
-                case 0:
+                case 0 -> {
                     return;
-                case 1:
-                    inputCustomerInfo();
-                    break;
-                case 2:
-                    print();
-                    break;
-                case 3:
-                    rank();
-                    break;
+                }
+                case 1 -> inputCustomerInfo();
+                case 2 -> print();
+                case 3 -> rank();
             }
         }
 
@@ -132,8 +131,8 @@ class CustomerGoodsAdmin {
         String choice = sc.next();
         if (choice.equals("0")) {
             System.out.println("系统当前有" + customers.length + "条用户信息");
-            for (int i = 0; i < customers.length; i++) {
-                System.out.println(customers[i]);
+            for (Customer customer : customers) {
+                System.out.println(customer);
             }
         } else {
             for (Customer customer : customers) {
@@ -164,10 +163,10 @@ class CustomerGoodsAdmin {
 }
 
 class Customer {
-    Scanner sc = new Scanner(System.in);
     private final String name;
     private final int age;
     private final Goods[] goods;
+    Scanner sc = new Scanner(System.in);
     private double total;
 
     Customer() {
@@ -189,9 +188,6 @@ class Customer {
         return total;
     }
 
-    public void print() {
-
-    }
 
     public String getName() {
         return name;
@@ -214,11 +210,11 @@ class Customer {
 }
 
 class Goods {
-    Scanner sc = new Scanner(System.in);
     private final String name;
     private final int num;
     private final double price;
     private final double totalPrice;
+    Scanner sc = new Scanner(System.in);
 
     Goods() {
         System.out.println("输入商品的名称:");
@@ -279,7 +275,6 @@ class ManagedGoods {
     }
 }
 
-
 class ManagedGoodsInterface {
     Scanner sc = new Scanner(System.in);
     int numberGoods;
@@ -287,7 +282,6 @@ class ManagedGoodsInterface {
     List<ManagedGoods> items = new ArrayList<ManagedGoods>();
     Random rand = new Random();
 
-    @Test
     public void show() {
         System.out.println("Input the number of Goods : ");
         numberGoods = sc.nextInt();
@@ -315,7 +309,7 @@ class ManagedGoodsInterface {
             tmp.start();
         }
         try {
-            Thread.sleep(20000);
+            sleep(20000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -333,7 +327,7 @@ class GoodsInputer extends Thread {
     }
 
     public void run() {
-        while (true) {
+        do {
             int amount = random.nextInt(items.size()) + items.size();
             items.get(id).addQuantity(amount);
             try {
@@ -341,7 +335,7 @@ class GoodsInputer extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
+        } while (true);
     }
 
 }
@@ -350,7 +344,7 @@ class GoodsOutputer extends Thread {
     private final List<ManagedGoods> items;
     private final Random random = new Random();
 
-    public GoodsOutputer(List items) {
+    public GoodsOutputer(List<ManagedGoods> items) {
         this.items = items;
     }
 
@@ -370,5 +364,241 @@ class GoodsOutputer extends Thread {
                 new GoodsInputer(items, id).start();
             }
         }
+    }
+}
+
+abstract class Leader implements employment {
+    private String name;
+
+    Leader(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void assignWork(String name) {
+        new Worker(name).assignment("Play game", this);
+    }
+}
+
+class Worker {
+    private String name;
+
+    Worker(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    void assignment(String job, Leader leader) {
+        System.out.printf(this.getName() + " is " + job);
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        leader.CallBack();
+    }
+}
+
+class EmploymentSystem {
+    public void show() {
+        System.out.println("Welcome To EmploymentSystem Starting...");
+        Leader leader1 = new Leader("Leader1") {
+            @Override
+            public void CallBack() {
+                System.out.println("Assigned By " + getName() + " Finished");
+            }
+        };
+        Leader leader2 = new Leader("Leader2") {
+            @Override
+            public void CallBack() {
+                System.out.println("Assigned By " + getName() + " Finished");
+            }
+        };
+        leader1.assignWork("worker1");
+        leader2.assignWork("worker2");
+
+    }
+}
+
+
+class StudentInfo implements Serializable{
+    String major;
+    String name;
+
+    StudentInfo(String name, String major) {
+        this.name = name;
+        this.major = major;
+    }
+
+    @Override
+    public String toString() {
+        return name+"\t"+major;
+    }
+}
+
+
+class StudentManageSystem implements Serializable{
+    List<StudentInfo> studentsData = new ArrayList<>();
+    Scanner sc = new Scanner(System.in);
+
+    void saveData() throws IOException {
+        File file = new File("./SystemData.dat");
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(studentsData);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
+
+    void loadData(){
+        File file = new File("./SystemData.dat");
+        if(!file.exists()){
+            return ;
+        }
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        ObjectInputStream objectInputStream = null;
+        try {
+            objectInputStream = new ObjectInputStream(fileInputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            studentsData = (ArrayList<StudentInfo>) objectInputStream.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            objectInputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    void addStudent() {
+        System.out.println("输入学生的姓名 : ");
+        String name = sc.next();
+        System.out.println("输入学生的专业 : ");
+        String major = sc.next();
+        StudentInfo studentInfo = new StudentInfo(name, major);
+        studentsData.add(studentInfo);
+    }
+
+    void updateStudent() {
+        System.out.println("输入要修改的学生姓名 ： ");
+        String name = sc.next();
+        System.out.println("输入要修改的信息 ： ");
+        String major = sc.next();
+        Boolean flag = false;
+        for(StudentInfo data : studentsData){
+            if(Objects.equals(data.name, name)){
+                flag = true;
+                data.major = major;
+                System.out.println("修改成功");
+                listStudent();
+                return ;
+            }
+        }
+        if(flag == false){
+            System.out.println("未找到该学生");
+        }
+    }
+
+    void deleteStudent() {
+        System.out.println("输入要删除的学生姓名 ： ");
+        String name = sc.next();
+        Boolean flag = false;
+        for(StudentInfo data : studentsData){
+            if(Objects.equals(data.name, name)){
+                studentsData.remove(data);
+                flag = true;
+                System.out.println("删除成功");
+                listStudent();
+                return ;
+            }
+        }
+        if(!flag){
+            System.out.println("未找到该学生");
+        }
+    }
+
+    void infoStudent() {
+        System.out.println("输入要查看的学生姓名 ： ");
+        String name = sc.next();
+        boolean flag = false;
+        for(StudentInfo data : studentsData){
+            if(Objects.equals(data.name, name)){
+                System.out.println(data);
+                return ;
+            }
+        }
+    }
+    void listStudent(){
+        for(StudentInfo tmp : studentsData){
+            System.out.println(tmp);
+        }
+    }
+
+    public void show() {
+        loadData();
+        while (true) {
+            System.out.println("学生信息管理");
+            System.out.println("----------------");
+            System.out.println("1——学生信息添加");
+            System.out.println("2——学生信息修改");
+            System.out.println("3——学生信息删除");
+            System.out.println("4——学生信息查询");
+            System.out.println("5——查看所有信息");
+            System.out.println("0——退出系统");
+            System.out.println("----------------");
+            int choice = sc.nextInt();
+//            System.out.println(choice);
+            switch (choice) {
+                case 1:{
+                    addStudent();
+                    break;
+                }
+                case 2:{
+                    updateStudent();
+                    break;
+                }
+                case 3:{
+                    deleteStudent();
+                    break;
+                }
+                case 4:{
+                    infoStudent();
+                    break;
+                }
+                case 5:{
+                    listStudent();
+                    break;
+                }
+
+                case 0: {
+                    try {
+                        saveData();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return;
+                }
+            }
+        }
+
     }
 }

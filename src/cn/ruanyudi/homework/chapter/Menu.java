@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.Scanner;
 
 public class Menu {
-    @Test
+
     public static void showMenu() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -14,6 +14,7 @@ public class Menu {
             System.out.println("2. 第2章节\n");
             System.out.println("3. 第3章节\n");
             System.out.println("4. 第4章节\n");
+            System.out.println("5. 第5章节\n");
             System.out.print("输入你的选择（0-退出）： ");
             int choice = sc.nextInt();
             switch (choice) {
@@ -30,8 +31,9 @@ public class Menu {
                     cn.ruanyudi.homework.chapter.Chapter3.showMenu();
                     break;
                 case 4:
-                    System.out.println("暂无作业");
+                    cn.ruanyudi.homework.chapter.Chapter4.showMenu();
                     break;
+
             }
         }
     }
