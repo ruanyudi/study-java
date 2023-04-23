@@ -12,8 +12,8 @@ public class Chapter4 {
     public static void showMenu() {
         System.out.println("\nWelcome to Section 4 assignments, select the activity number you want to view:");
         while (true) {
-            System.out.println("1 - File reading and writing");
-            System.out.println("2 – Image download");
+            System.out.println("1.File reading and writing");
+            System.out.println("2.Image download");
             System.out.println("Enter your choice (0-exit)");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
