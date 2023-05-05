@@ -146,6 +146,10 @@ class CustomerGoodsAdmin {
     }
 
     private void rank() {
+        if(customers==null){
+            System.out.println("there is no data!");
+            return ;
+        }
         System.out.println("The system currently has" + customers.length + "user information");
         for (int i = 0; i < customers.length; i++) {
             for (int j = customers.length - 1; j > i; j--) {
