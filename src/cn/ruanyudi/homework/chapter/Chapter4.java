@@ -2,18 +2,15 @@ package cn.ruanyudi.homework.chapter;
 
 import java.awt.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
+import java.net.*;
 import java.util.Scanner;
-
 public class Chapter4 {
     public static void showMenu() {
         System.out.println("\nWelcome to Section 4 assignments, select the activity number you want to view:");
         while (true) {
             System.out.println("1.File reading and writing");
             System.out.println("2.Image download");
+            System.out.println("3.Weather API");
             System.out.println("Enter your choice (0-exit)");
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
@@ -26,6 +23,8 @@ public class Chapter4 {
                 case 2:
                     new ImageViewer().show();
                     break;
+                case 4:
+
             }
 //            System.out.println("输入0以继续");
 //            sc.nextInt();
@@ -134,5 +133,72 @@ class ImageViewer{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+}
+
+class HttpPost {
+    public static String doPost(String httpUrl) {
+        HttpURLConnection connection = null;
+        InputStream is = null;
+        OutputStream os = null;
+        BufferedReader br = null;
+        String result = null;
+        try {
+            URL url = new URL(httpUrl);
+            // 通过远程url连接对象打开连接
+            connection = (HttpURLConnection) url.openConnection();
+            // 设置连接请求方式
+            connection.setRequestMethod("GET");
+            // 设置连接主机服务器超时时间：15000毫秒
+            connection.setConnectTimeout(15000);
+            // 设置读取主机服务器返回数据超时时间：60000毫秒
+            connection.setReadTimeout(60000);
+            os = connection.getOutputStream();
+            if (connection.getResponseCode() == 200) {
+
+                is = connection.getInputStream();
+                // 对输入流对象进行包装:charset根据工作项目组的要求来设置
+                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+                StringBuffer sbf = new StringBuffer();
+                String temp = null;
+                // 循环遍历一行一行读取数据
+                while ((temp = br.readLine()) != null) {
+                    sbf.append(temp);
+                    sbf.append("\r\n");
+                }
+                result = sbf.toString();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            if (null != br) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != os) {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != is) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            // 断开与远程地址url的连接
+            connection.disconnect();
+        }
+        return result;
     }
 }
