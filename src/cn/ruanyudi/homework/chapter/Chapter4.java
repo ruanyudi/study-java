@@ -3,7 +3,12 @@ package cn.ruanyudi.homework.chapter;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.zip.GZIPInputStream;
+import org.json.JSONObject;
+
 public class Chapter4 {
     public static void showMenu() {
         System.out.println("\nWelcome to Section 4 assignments, select the activity number you want to view:");
@@ -23,8 +28,9 @@ public class Chapter4 {
                 case 2:
                     new ImageViewer().show();
                     break;
-                case 4:
-
+                case 3:
+                    new WeatherApi().show();
+                    break;
             }
 //            System.out.println("输入0以继续");
 //            sc.nextInt();
@@ -136,69 +142,53 @@ class ImageViewer{
     }
 }
 
-class HttpPost {
-    public static String doPost(String httpUrl) {
-        HttpURLConnection connection = null;
-        InputStream is = null;
-        OutputStream os = null;
-        BufferedReader br = null;
-        String result = null;
+class WeatherApi {
+    Scanner sc = new Scanner(System.in);
+    String key = "f31902ff88b14313a3d283ab25edd978";
+    public void show(){
+        System.out.println("Input the City name which you want to queue : ");
+        String city = sc.next();
         try {
-            URL url = new URL(httpUrl);
-            // 通过远程url连接对象打开连接
-            connection = (HttpURLConnection) url.openConnection();
-            // 设置连接请求方式
-            connection.setRequestMethod("GET");
-            // 设置连接主机服务器超时时间：15000毫秒
-            connection.setConnectTimeout(15000);
-            // 设置读取主机服务器返回数据超时时间：60000毫秒
-            connection.setReadTimeout(60000);
-            os = connection.getOutputStream();
-            if (connection.getResponseCode() == 200) {
-
-                is = connection.getInputStream();
-                // 对输入流对象进行包装:charset根据工作项目组的要求来设置
-                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-                StringBuffer sbf = new StringBuffer();
-                String temp = null;
-                // 循环遍历一行一行读取数据
-                while ((temp = br.readLine()) != null) {
-                    sbf.append(temp);
-                    sbf.append("\r\n");
-                }
-                result = sbf.toString();
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            // 关闭资源
-            if (null != br) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (null != os) {
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (null != is) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            // 断开与远程地址url的连接
-            connection.disconnect();
+            city = URLEncoder.encode(city,"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
-        return result;
+        String location ;
+        try {
+            location = netGet("https://geoapi.qweather.com/v2/city/lookup?location="+city+"&key="+key);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        JSONObject jsLocation = new JSONObject(location);
+//       System.out.println(jsLocation.getJSONArray("location"));
+        JSONObject jsonitem = (JSONObject) jsLocation.getJSONArray("location").get(0);
+        System.out.println("城市 : "+jsonitem.get("name"));
+        String result = "";
+        try {
+            result = netGet("https://devapi.qweather.com/v7/weather/now?location="+jsonitem.get("id")+"&key="+key);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        JSONObject jsonObject = new JSONObject(result);
+        jsonObject = jsonObject.getJSONObject("now");
+        System.out.println("气温 : "+jsonObject.get("temp"));
+        System.out.println("天气 : "+jsonObject.get("text"));
+        System.out.println("风向 : "+jsonObject.get("windDir"));
+    }
+    String  netGet(String urlPath) throws Exception {
+        URL url = new URL(urlPath);
+        URLConnection conn = url.openConnection();
+        GZIPInputStream is = new GZIPInputStream(conn.getInputStream());
+        InputStreamReader isr = new InputStreamReader(is, "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String line;
+        StringBuilder sb = new StringBuilder();
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        br.close();
+        isr.close();
+        is.close();
+        return sb.toString();
     }
 }
