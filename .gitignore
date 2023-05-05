@@ -1,7 +1,6 @@
 /out/
 /.idea/
 /javacode.zip
-/javacode.iml
 test.jpg
 data.txt
 lib/junit-platform-console-standalone-1.9.2.jar
