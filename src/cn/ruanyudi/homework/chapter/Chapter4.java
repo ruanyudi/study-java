@@ -1,13 +1,12 @@
 package cn.ruanyudi.homework.chapter;
 
+import org.json.JSONObject;
+
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
-import org.json.JSONObject;
 
 public class Chapter4 {
     public static void showMenu() {
@@ -20,17 +19,12 @@ public class Chapter4 {
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             switch (choice) {
-                case 0:
+                case 0 -> {
                     return;
-                case 1:
-                    new TextReadWrite().show();
-                    break;
-                case 2:
-                    new ImageViewer().show();
-                    break;
-                case 3:
-                    new WeatherApi().show();
-                    break;
+                }
+                case 1 -> new TextReadWrite().show();
+                case 2 -> new ImageViewer().show();
+                case 3 -> new WeatherApi().show();
             }
 //            System.out.println("输入0以继续");
 //            sc.nextInt();
@@ -44,7 +38,7 @@ class TextReadWrite{
 
     public void show(){
         File file1 = new File(filePath1);
-        if(file1.exists()==false){
+        if(!file1.exists()){
             try {
                 System.out.println("File not found Automatically create files....");
                 file1.createNewFile();
@@ -53,13 +47,13 @@ class TextReadWrite{
             }
         }
         File file2 = new File(filePath2);
-        FileInputStream fileInputStream = null;
+        FileInputStream fileInputStream;
         try {
             fileInputStream = new FileInputStream(file1);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        FileOutputStream fileOutputStream = null;
+        FileOutputStream fileOutputStream;
         try {
             fileOutputStream = new FileOutputStream(file2);
         } catch (FileNotFoundException e) {
@@ -110,7 +104,7 @@ class ImageViewer{
             throw new RuntimeException(e);
         }
         connection.setConnectTimeout(1000);
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
             inputStream = connection.getInputStream();
         } catch (IOException e) {
@@ -123,7 +117,7 @@ class ImageViewer{
             throw new RuntimeException(e);
         }
         File output = new File(savePath);
-        FileOutputStream fileOutputStream = null;
+        FileOutputStream fileOutputStream;
         try {
             fileOutputStream = new FileOutputStream(output);
         } catch (FileNotFoundException e) {

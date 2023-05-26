@@ -31,7 +31,8 @@ public class Menu {
                 case 4:
                     cn.ruanyudi.homework.chapter.Chapter4.showMenu();
                     break;
-
+                case 5:
+                    cn.ruanyudi.homework.chapter.Chapter5.showMenu();
             }
         }
     }
